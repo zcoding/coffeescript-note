@@ -186,3 +186,61 @@ String::dasherize = ->
   this.replace /_/g, "-"
 
 
+# 非结构化赋值
+theBait = 1000
+theSwitch = 0
+[theBait, theSwitch] = [theSwitch, theBait]
+# 利用非结构化赋值还可以实现函数的多个返回值
+weatherReport = (location) ->
+  [location, 72, "Mostly Sunny"]
+[city, temp, forecast] = weatherReport "Berkeley, CA"
+# 非结构化赋值可以使用在任意深度嵌套的数组和对象上面，获取任意深度的对象属性或数组元素
+futurists =
+  sculptor: "Umberto Boccioni"
+  painter:  "Vladimir Burliuk"
+  poet:
+    name:   "F.T. Marinetti"
+    address: [
+      "Via Roma 42R"
+      "Bellagio, Italy 22021"
+    ]
+{poet: {name, address: [street, city]}} = futurists
+# 非结构化赋值甚至允许使用切片
+tag = "<impossible>"
+[open, contents..., close] = tag.split("")
+# 仅获取首尾元素也是可以的
+text = "Every literary critic believes he will
+        outwit history and have the last word"
+[first, ..., last] = text.split " "
+# 在构造函数中为属性赋值
+class Person
+  constructor: (options) -> 
+    {@name, @age, @height} = options
+tim = new Person age: 4
+
+
+# 函数上下文绑定
+Account = (customer, cart) ->
+  @customer = customer
+  @cart = cart
+  $('.shopping_cart').bind 'click', (event) =>
+    @customer.purchase @cart
+
+
+# 使用反引号内嵌JavaScript（最好不使用）
+hi = `function() {
+  return [document.title, "Hello JavaScript"].join(": ");
+}`
+
+
+# switch/when/else语句
+switch day
+  when "Mon" then go work
+  when "Tue" then go relax
+  when "Thu" then go iceFishing
+  when "Fri", "Sat"
+    if day is bingoDay
+      go bingo
+      go dancing
+  when "Sun" then go church
+  else go work
