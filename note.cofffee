@@ -1,0 +1,188 @@
+# 函数
+# 函数由可选的参数列表、箭头和函数体构成
+say = -> "Say what ?"
+square = (x) -> x * x
+cube = (x) -> square(x) * x
+# 函数允许设置默认参数，当实参为null或者undefined时将使用默认参数代替
+fill = (container, liquid = "coffee") ->
+  "Filling the #{container} with #{liquid}..."
+
+
+# 对象和数组
+# 对象和数组的定义看起来与JavaScript非常相似
+# 当属性单独一行时，逗号是可选的
+# 对象定义可以使用缩进的写法以省略花括号
+song = ["do", "re", "mi", "fa", "so"]
+singers = {Jagger: "Rock", Elvis: "Roll"}
+bitlist = [
+  1,0,1
+]
+kids = 
+  brother:
+    name: "Max"
+    age: 11
+  sister: 
+    name: "Tda"
+    age: 9
+# 在JavaScript中不允许使用没有引号引住保留字（例如class）作为对象的属性
+# 但是在CoffeeScript中，你可以使用保留字作为对象的属性，编译之后的JavaScript将会自动把保留字用引号引起来
+$('.account').attr class: 'active'
+log object.class
+
+
+# 词法作用域和变量安全性
+outer = 1
+changeNumbers = ->
+  inner = -1
+  outer = 10
+inner = changeNumbers()
+# 所有的变量声明，在第一次出现的时候，就被放到离它最近的作用域的顶部
+# outer变量在函数内没有被重新声明，是因为它已经在作用域内，而inner第一次出现是在函数内，因此函数内的inner不能够改变外部的inner变量的值
+
+
+# if、else、unless和条件赋值
+# if/else语句不需要小括号和花括号，而是使用缩进来表示
+# 还可以写成if/unless后缀形式的简写
+mood = greatlyImproved if singing
+if happy and knowsIt
+  clapsHands()
+  chaChaCha()
+else
+  showIt()
+date = if friday then sue else jill
+
+
+# 可变参数列表
+# CoffeeScript在函数定义和声明中使用...来实现可变参数列表
+gold = silver = rest = "unknown"
+awardMedals = (first, second, others...) ->
+  gold   = first
+  silver = second
+  rest   = others
+contenders = [
+  "Michael Phelps"
+  "Liu Xiang"
+  "Yao Ming"
+  "Allyson Felix"
+  "Shawn Johnson"
+  "Roman Sebrle"
+  "Guo Jingjing"
+  "Tyson Gay"
+  "Asafa Powell"
+  "Usain Bolt"
+]
+awardMedals contenders...
+alert "Gold: " + gold
+alert "Silver: " + silver
+alert "The Field: " + rest
+
+
+# 循环
+# 在CoffeeScript的循环语句中，数组、对象和范围将被写成可理解的表达式
+eat food for food in ['toast', 'cheese', 'wine']
+courses = ['greens', 'caviar', 'truffles']
+menu i + 1, dish for dish, i in courses
+foods = ['broccoli', 'spinach', 'chocolate']
+eat food for food in foods when food isnt 'chocolate'
+countdown = (num for num in [10..1])
+evens = (x for x in [0..10] by 2)
+# 遍历对象属性，使用for key, value of object语句
+yearsOld = max: 10, ida: 9, tim: 11
+ages = for child, age of yearsOld
+  "#{child} is #{age}"
+# 如果要遍历仅自己定义的属性（非继承），则使用for own key, value of object语句
+# while循环是CoffeeScript提供的唯一一个低级循环；while循环可以用作表达式生成一个数组
+if this.studyingEconomics
+  buy()  while supply > demand
+  sell() until supply > demand
+num = 6
+lyrics = while num -= 1
+  "#{num} little monkeys, jumping on the bed.
+    One fell out and bumped his head."
+# until关键字表示while not
+# loop关键字表示while true
+# CoffeeScript提供了do关键字，可以在循环内立即调用一个函数
+for filename in list
+  do (filename) ->
+    fs.readFile filename, (err, contents) ->
+      compile filename, contents.toString()
+
+
+# 数组切割
+# 两个点为闭区间；三个点为开区间
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+start   = numbers[0..2]
+middle  = numbers[3...-2]
+end     = numbers[-2..]
+copy    = numbers[..]
+# 不仅可以做切割，还支持做元素替换
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+numbers[3..6] = [-3, -4, -5, -6]
+
+
+# 隐式返回（所有东西都是表达式）
+grade = (student) ->
+  if student.excellentWork
+    "A+"
+  else if student.okayStuff
+    if student.triedHard then "B" else "B-"
+  else
+    "C"
+eldest = if 24 > 21 then "Liz" else "Ike"
+
+
+# break/continue/return语句在CoffeeScript中不会被转换
+
+
+# 操作符及其别名
+# is              ===
+# isnt            !==
+# not             !
+# and             &&
+# or              ||
+# true/yes/on     true
+# false/no/off    false
+# @/this          this
+# of              in
+# in              不存在对应的操作符或别名
+# a ** b          Math.pow(a, b)
+# a // b          Math.floor(a / b)
+# a %% b          (a % b + b) % b
+launch() if ignition is on
+volume = 10 if band isnt SpinalTap
+letTheWildRumpusBegin() unless answer is no
+if car.speed < limit then accelerate()
+winner = yes if pick in [47, 92, 13]
+print inspect "My name is #{@name}"
+# 扩展的操作符
+# ?操作符表示变量不为null或者undefined
+solipsism = true if mind? and not world?
+speed = 0
+speed ?= 15
+footprints = yeti ? "bear"
+# 更复杂的写法
+zip = lottery.drawWinner?().address?.zipcode
+
+
+# 类和继承
+class Animal
+  constructor: (@name) ->
+  move: (meters) ->
+    alert @name + " moved #{meters}m."
+class Snake extends Animal
+  move: ->
+    alert "Slithering..."
+    super 5
+class Horse extends Animal
+  move: ->
+    alert "Galloping..."
+    super 45
+sam = new Snake "Sammy the Python"
+tom = new Horse "Tommy the Palomino"
+sam.move()
+tom.move()
+# 使用::运算符快速访问原型
+String::dasherize = ->
+  this.replace /_/g, "-"
+
+
