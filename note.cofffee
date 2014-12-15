@@ -244,3 +244,60 @@ switch day
       go dancing
   when "Sun" then go church
   else go work
+# switch语句也可以不使用if/else控制来实现条件表达式的效果
+score = 76
+grade = switch
+  when score < 60 then 'F'
+  when score < 70 then 'D'
+  when score < 80 then 'C'
+  when score < 90 then 'B'
+  else 'A'
+
+
+# try/catch/finally
+# try/catch语句和JavaScript中的try/catch是一样的
+try
+  allHellBreaksLoose()
+  catsAndDogsLivingTogether()
+catch error
+  print error
+finally
+  cleanUp()
+
+
+# 链式比较
+cholesterol = 127
+healthy = 200 > cholesterol > 60
+
+
+# 字符串插值/块字符串/块注释
+author = "Wittgenstein"
+quote  = "A picture is a fact. -- #{ author }"
+sentence = "#{ 22 / 7 } is a decent approximation of π"
+# 块字符串
+mobyDick = "Call me Ishmael. Some years ago --
+  never mind how long precisely -- having little
+  or no money in my purse, and nothing particular
+  to interest me on shore, I thought I would sail
+  about a little and see the watery part of the
+  world..."
+html = """
+       <strong>
+         cup of coffeescript
+       </strong>
+       """
+# 块注释
+###
+SkinnyMochaHalfCaffScript Compiler v1.0
+Released under the MIT License
+###
+# 块式正则表达式
+OPERATOR = /// ^ (
+  ?: [-=]>             # function
+   | [-+*/%<>&|^!?=]=  # compound assign / compare
+   | >>>=?             # zero-fill right shift
+   | ([-+:])\1         # doubles
+   | ([&|<>])\2=?      # logic / shift
+   | \?\.              # soak access
+   | \.{2,3}           # range or splat
+) ///
