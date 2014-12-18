@@ -301,3 +301,9 @@ OPERATOR = /// ^ (
    | \?\.              # soak access
    | \.{2,3}           # range or splat
 ) ///
+
+
+# do
+afunc = do ->
+  a = 13
+  c = "#{a} is not good."
